@@ -1,5 +1,6 @@
 import type { Language, HomeContent } from "./home-content";
 import { BrandMark } from "./home-icons";
+import Link from "next/link";
 
 type HomeHeaderProps = {
   language: Language;
@@ -42,9 +43,9 @@ export default function HomeHeader({
           <span aria-hidden="true">文</span>
           {language === "ar" ? "English" : "العربية"}
         </button>
-        <a className="login-link" href="#get-started">
+        <Link className="login-link" href={'/login'}>
           {copy.login}
-        </a>
+        </Link>
       </div>
     </header>
   );
