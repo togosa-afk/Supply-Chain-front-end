@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
+
+import { getStoredAuthSession, type AuthSession } from "@/app/lib/auth";
 import { login, type LoginData } from "@/app/services/login/login";
 
 const initialForm: LoginData = {
@@ -12,6 +14,9 @@ const initialForm: LoginData = {
 export default function LoginPage() {
   const [form, setForm] = useState(initialForm);
   const [isLoading, setIsLoading] = useState(false);
+  const [authSession, setAuthSession] = useState<AuthSession | null>(
+    getStoredAuthSession(),
+  );
   const [submissionMessage, setSubmissionMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -26,8 +31,10 @@ export default function LoginPage() {
     event.preventDefault();
     setIsLoading(true);
     setSubmissionMessage(null);
+
     try {
-      await login({ ...form });
+      const session = await login({ ...form });
+      setAuthSession(session);
       setSubmissionMessage({
         type: "success",
         text: "You login successfully",
@@ -170,18 +177,28 @@ export default function LoginPage() {
                 {isLoading ? "Wait login ..." : "Login"}
               </button>
               {submissionMessage && (
-                <p
-                  role={submissionMessage.type === "error" ? "alert" : "status"}
-                  aria-live="polite"
-                  className={`text-sm ${
-                    submissionMessage.type === "error"
-                      ? "text-red-700"
-                      : "text-[#1d5749]"
-                  }`}
-                >
-                  {/* TODO: Add Dynamic link */}
-                  {/* <Link href={`${user.id}`}>Goto profile</Link> */}
-                </p>
+                <div className="space-y-2 text-sm">
+                  <p
+                    role={submissionMessage.type === "error" ? "alert" : "status"}
+                    aria-live="polite"
+                    className={
+                      submissionMessage.type === "error"
+                        ? "text-red-700"
+                        : "text-[#1d5749]"
+                    }
+                  >
+                    {submissionMessage.text}
+                  </p>
+                  {submissionMessage.type === "success" &&
+                    authSession?.user?.id && (
+                      <Link
+                        href={`/profile/${authSession.user.id}`}
+                        className="inline-block font-semibold text-[#1d5749] underline decoration-[#1d5749]/40 underline-offset-4 transition hover:text-[#ed956a]"
+                      >
+                        Go to profile
+                      </Link>
+                    )}
+                </div>
               )}
             </form>
 
