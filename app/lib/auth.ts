@@ -15,7 +15,7 @@ export const AUTH_STORAGE_KEYS = {
   token: "supplyflow_token",
   user: "supplyflow_user",
 };
-
+ //change storge to http-only 
 export const saveAuthSession = (session: AuthSession) => {
   if (typeof window === "undefined") {
     return;

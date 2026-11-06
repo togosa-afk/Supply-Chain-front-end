@@ -5,6 +5,7 @@ import { type FormEvent, useState } from "react";
 
 import { getStoredAuthSession, type AuthSession } from "@/app/lib/auth";
 import { login, type LoginData } from "@/app/services/login/login";
+import { redirect } from "next/navigation";
 
 const initialForm: LoginData = {
   email: "",
@@ -179,7 +180,9 @@ export default function LoginPage() {
               {submissionMessage && (
                 <div className="space-y-2 text-sm">
                   <p
-                    role={submissionMessage.type === "error" ? "alert" : "status"}
+                    role={
+                      submissionMessage.type === "error" ? "alert" : "status"
+                    }
                     aria-live="polite"
                     className={
                       submissionMessage.type === "error"
@@ -190,14 +193,8 @@ export default function LoginPage() {
                     {submissionMessage.text}
                   </p>
                   {submissionMessage.type === "success" &&
-                    authSession?.user?.id && (
-                      <Link
-                        href={`/profile/${authSession.user.id}`}
-                        className="inline-block font-semibold text-[#1d5749] underline decoration-[#1d5749]/40 underline-offset-4 transition hover:text-[#ed956a]"
-                      >
-                        Go to profile
-                      </Link>
-                    )}
+                    authSession?.user?.id &&
+                    redirect(`profile/${authSession.user.id}`)}
                 </div>
               )}
             </form>

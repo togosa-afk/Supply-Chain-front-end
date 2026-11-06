@@ -7,6 +7,7 @@ import {
   type RegistrationData,
   type RegistrationRole,
 } from "@/app/services/register/register";
+import { redirect } from "next/navigation";
 
 type RegistrationForm = Omit<RegistrationData, "role"> & {
   role: RegistrationRole | "";
@@ -27,10 +28,7 @@ export default function RegisterPage() {
     text: string;
   } | null>(null);
 
-  const handleChange = (
-    field: keyof RegistrationForm,
-    value: string,
-  ) => {
+  const handleChange = (field: keyof RegistrationForm, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     setSubmissionMessage(null);
   };
@@ -78,11 +76,20 @@ export default function RegisterPage() {
             <div className="relative z-10">
               <div className="brand">
                 <span className="brand-mark" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 15.5C6.47 15.5 6 15.03 6 14.5V9.2C6 8.65 6.47 8.18 7 8.18H9.5V15.5H7ZM10.8 8.18H15.3C15.83 8.18 16.3 8.65 16.3 9.2V14.5C16.3 15.03 15.83 15.5 15.3 15.5H10.8V8.18ZM9.5 5.5H14.5C15.88 5.5 17 6.62 17 8V16C17 17.38 15.88 18.5 14.5 18.5H9.5C8.12 18.5 7 17.38 7 16V8C7 6.62 8.12 5.5 9.5 5.5Z" fill="currentColor"/>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7 15.5C6.47 15.5 6 15.03 6 14.5V9.2C6 8.65 6.47 8.18 7 8.18H9.5V15.5H7ZM10.8 8.18H15.3C15.83 8.18 16.3 8.65 16.3 9.2V14.5C16.3 15.03 15.83 15.5 15.3 15.5H10.8V8.18ZM9.5 5.5H14.5C15.88 5.5 17 6.62 17 8V16C17 17.38 15.88 18.5 14.5 18.5H9.5C8.12 18.5 7 17.38 7 16V8C7 6.62 8.12 5.5 9.5 5.5Z"
+                      fill="currentColor"
+                    />
                   </svg>
                 </span>
-                <span className="brand-name">Supply <span>Chain</span></span>
+                <span className="brand-name">
+                  Supply <span>Chain</span>
+                </span>
               </div>
 
               <span className="eyebrow mt-10">
@@ -96,8 +103,9 @@ export default function RegisterPage() {
               </h1>
 
               <p className="mt-5 max-w-md text-sm leading-7 text-[#65756d] sm:text-base">
-                Build your business profile, manage supplier visibility, and coordinate
-                every shipment with a more connected and transparent workflow.
+                Build your business profile, manage supplier visibility, and
+                coordinate every shipment with a more connected and transparent
+                workflow.
               </p>
 
               <div className="mt-8 space-y-4 text-sm text-[#27483f]">
@@ -106,7 +114,10 @@ export default function RegisterPage() {
                   "Manage roles for logistics, procurement, and fulfillment",
                   "Get faster visibility across your operations",
                 ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-2xl border border-[#e3ebe4] bg-white/80 px-3 py-3 shadow-sm">
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 rounded-2xl border border-[#e3ebe4] bg-white/80 px-3 py-3 shadow-sm"
+                  >
                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e9f3ea] text-[#1d5749] font-bold">
                       ✓
                     </span>
@@ -130,7 +141,10 @@ export default function RegisterPage() {
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-semibold text-[#1d5749]">
+                <label
+                  htmlFor="name"
+                  className="text-sm font-semibold text-[#1d5749]"
+                >
                   Full name
                 </label>
                 <input
@@ -146,7 +160,10 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-semibold text-[#1d5749]">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-semibold text-[#1d5749]"
+                >
                   Email
                 </label>
                 <input
@@ -154,7 +171,9 @@ export default function RegisterPage() {
                   type="email"
                   autoComplete="email"
                   value={form.email}
-                  onChange={(event) => handleChange("email", event.target.value)}
+                  onChange={(event) =>
+                    handleChange("email", event.target.value)
+                  }
                   required
                   className="h-11 w-full rounded-xl border border-[#dfe7df] bg-[#f8faf8] px-3 text-sm text-[#183a32] transition placeholder:text-[#98a6a1] focus:border-[#1d5749] focus:outline-none focus:ring-4 focus:ring-[#e8f0e8]"
                   placeholder="name@email.com"
@@ -162,7 +181,10 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-semibold text-[#1d5749]">
+                <label
+                  htmlFor="password"
+                  className="text-sm font-semibold text-[#1d5749]"
+                >
                   Password
                 </label>
                 <input
@@ -170,7 +192,9 @@ export default function RegisterPage() {
                   type="password"
                   autoComplete="new-password"
                   value={form.password}
-                  onChange={(event) => handleChange("password", event.target.value)}
+                  onChange={(event) =>
+                    handleChange("password", event.target.value)
+                  }
                   required
                   className="h-11 w-full rounded-xl border border-[#dfe7df] bg-[#f8faf8] px-3 text-sm text-[#183a32] transition placeholder:text-[#98a6a1] focus:border-[#1d5749] focus:outline-none focus:ring-4 focus:ring-[#e8f0e8]"
                   placeholder="••••••••"
@@ -178,7 +202,10 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="role" className="text-sm font-semibold text-[#1d5749]">
+                <label
+                  htmlFor="role"
+                  className="text-sm font-semibold text-[#1d5749]"
+                >
                   Select role
                 </label>
                 <select
@@ -204,23 +231,31 @@ export default function RegisterPage() {
                 {isLoading ? "Creating account..." : "Register"}
               </button>
               {submissionMessage && (
-                <p
-                  role={submissionMessage.type === "error" ? "alert" : "status"}
-                  aria-live="polite"
-                  className={`text-sm ${
-                    submissionMessage.type === "error"
-                      ? "text-red-700"
-                      : "text-[#1d5749]"
-                  }`}
-                >
-                  {submissionMessage.text}
-                </p>
+                <div>
+                  <p
+                    role={
+                      submissionMessage.type === "error" ? "alert" : "status"
+                    }
+                    aria-live="polite"
+                    className={`text-sm ${
+                      submissionMessage.type === "error"
+                        ? "text-red-700"
+                        : "text-[#1d5749]"
+                    }`}
+                  >
+                    {submissionMessage.text}
+                  </p>
+                  {submissionMessage.type === "success" && redirect("/login")}
+                </div>
               )}
             </form>
 
             <p className="mt-6 text-center text-sm text-[#5e6f69]">
-              Do you have an account? {" "}
-              <Link href="/login" className="font-semibold text-[#1d5749] underline decoration-[#1d5749]/40 underline-offset-4 transition hover:text-[#ed956a]">
+              Do you have an account?{" "}
+              <Link
+                href="/login"
+                className="font-semibold text-[#1d5749] underline decoration-[#1d5749]/40 underline-offset-4 transition hover:text-[#ed956a]"
+              >
                 Login here
               </Link>
             </p>
