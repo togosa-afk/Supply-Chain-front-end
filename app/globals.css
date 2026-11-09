@@ -11,12 +11,12 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-green: var(--green);
-  --color-greenDark: var(--green-dark);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-panel: var(--color-surface);
+  --color-brand-accent: var(--color-accent);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-data);
 }
 
 * {
@@ -42,6 +42,12 @@ a {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
 }
 
 button {
@@ -138,8 +144,9 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
+  min-height: 44px;
   border: 0;
-  padding: 8px 0;
+  padding: 8px;
   background: transparent;
   color: #52655c;
   font-size: 13px;
@@ -577,6 +584,16 @@ button {
   font-size: 8px;
 }
 
+.button-spinner {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: button-spin 700ms linear infinite;
+}
+
 .online-dot {
   width: 6px;
   height: 6px;
@@ -881,6 +898,10 @@ button {
 }
 
 @keyframes slow-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes button-spin {
   to { transform: rotate(360deg); }
 }
 
