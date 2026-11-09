@@ -3,7 +3,6 @@ import { IBM_Plex_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import "./theme.css";
 import "./components.css";
-import ThemeToggle from "./_components/theme-toggle";
 
 const plexSans = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-sans",
@@ -42,7 +41,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-full flex flex-col">
         {children}
-        <ThemeToggle />
       </body>
     </html>
   );
