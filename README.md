@@ -2,40 +2,43 @@
 
 [العربية](README.ar.md) | **English**
 
-SupplyFlow is a bilingual (Arabic and English) front-end for a supply-chain
-platform concept. It brings merchants, suppliers/manufacturers, logistics
-providers, and customers together around a connected commerce and delivery
-journey.
+SupplyFlow is a bilingual (Arabic and English) front-end for a connected
+commerce and supply-chain platform. It brings merchants, suppliers and
+manufacturers, logistics providers, and customers together.
 
-### What’s included
+## Features
 
-- A public landing page with an Arabic/English language switch and automatic
-  right-to-left or left-to-right layout.
-- A feature overview for merchants, manufacturers, logistics providers, and
-  customers.
-- Login and account-registration pages.
-- A registration form that sends the user’s name, email, password, and role to
-  the backend registration endpoint.
+- Bilingual landing page with an Arabic/English switch and matching RTL/LTR
+  layout.
+- Login and registration forms with feedback and loading states. Registration
+  supports customers, merchants, manufacturers, and logistics providers.
+- Account profile at `/profile/[id]`, showing the signed-in user's details,
+  allowing account-role updates, and providing logout.
+- Dark and light themes, following the system preference until the user chooses
+  a theme; the choice is saved in browser storage.
+- Custom not-found page and shared accessible form and UI components.
+- Component usage and accessibility notes in [app/UI_COMPONENTS.md](app/UI_COMPONENTS.md).
 
-The current repository contains the front-end only. The login page is currently
-a user interface and is not connected to an authentication endpoint. Live
-shipment tracking, order management, and operational dashboards are not
-implemented here.
+This repository contains the front-end only and requires a compatible backend
+for authentication and registration. The current landing-page shipment content
+is illustrative: live shipment tracking, order management, and operational
+dashboards are not implemented.
 
-### Technology
+## Technology
 
-- Next.js 16 (App Router) and React 19
+- Next.js 16 App Router and React 19
 - TypeScript
 - Tailwind CSS 4
-- Axios for registration API requests
+- Axios for backend requests
+- IBM Plex Sans Arabic and IBM Plex Mono fonts
 
-### Requirements
+## Requirements
 
 - Node.js and npm
-- A backend service that implements `POST /api/auth/register` to use account
-  registration
+- A backend implementing the authentication endpoints below to use account
+  registration, login, and role updates
 
-### Run locally
+## Run locally
 
 1. Install dependencies:
 
@@ -43,39 +46,48 @@ implemented here.
    npm install
    ```
 
-2. To enable registration, create `.env.local` in the project root and set the
-   base URL of the backend:
+2. Create `.env.local` in the project root and set your backend base URL:
 
    ```env
    NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
    ```
 
-   Use the URL for your backend environment. The registration page appends
-   `/api/auth/register` to this base URL. The backend should accept `name`,
-   `email`, `password`, and one of these roles: `CUSTOMER`, `MERCHANT`,
-   `MANUFACTURER`, or `LOGISTICS_PROVIDER`.
+   The frontend appends these paths to the base URL:
 
-3. Start the development server:
+   | Method | Endpoint | Purpose |
+   | --- | --- | --- |
+   | `POST` | `/api/auth/register` | Register with `name`, `email`, `password`, and `role` |
+   | `POST` | `/api/auth/login` | Sign in with `email` and `password`; return an auth token and user data |
+   | `PATCH` | `/api/auth/updaterole` | Update `role`; requires `Authorization: Bearer <token>` |
+
+   Supported roles are `CUSTOMER`, `MERCHANT`, `MANUFACTURER`, and
+   `LOGISTICS_PROVIDER`. The login response must include a `token` or
+   `accessToken` and may include the user in a `user` field. The frontend stores
+   the token and user data in browser `localStorage` for the profile session.
+
+3. Start the development server on port 3001:
 
    ```bash
-   npm run dev
+   npm run dev -- --port 3001
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000).
+4. Open [http://localhost:3001](http://localhost:3001).
 
-### Available scripts
+## Available scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the local development server |
+| `npm run dev` | Start the development server (Next.js default port: 3000) |
 | `npm run build` | Create a production build |
 | `npm run start` | Run the production server |
 | `npm run lint` | Run ESLint |
 
-### Main routes
+## Main routes
 
 | Route | Description |
 | --- | --- |
 | `/` | Bilingual product landing page |
-| `/login` | Login page UI |
-| `/register` | Account-registration form |
+| `/login` | Backend-connected login form |
+| `/register` | Backend-connected account registration |
+| `/profile/[id]` | Signed-in user's profile and account-role editor |
+| Other paths | Custom 404 page |
