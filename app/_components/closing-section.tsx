@@ -1,4 +1,5 @@
 import type { HomeContent, Language } from "./home-content";
+import Link from "next/link";
 
 type ClosingSectionProps = {
   copy: HomeContent;
@@ -11,18 +12,17 @@ export default function ClosingSection({
 }: ClosingSectionProps) {
   return (
     <section className="closing-section page-width" id="get-started">
-      <div className="closing-pattern" aria-hidden="true" />
-      <span className="closing-flower" aria-hidden="true">
-        ✳
-      </span>
       <div className="closing-copy">
+        <p className="ui-kicker">
+          <span className="font-data">NEXT STEP / 01</span>
+        </p>
         <h2>{copy.bottomTitle}</h2>
         <p>{copy.bottomText}</p>
       </div>
-      <a className="button button-light" href="#top">
+      <Link className="ui-button ui-button--secondary" href="/register">
         {copy.bottomCta}
         <span aria-hidden="true">{language === "ar" ? "←" : "→"}</span>
-      </a>
+      </Link>
     </section>
   );
 }

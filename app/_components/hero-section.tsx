@@ -1,5 +1,5 @@
 import type { HomeContent, Language } from "./home-content";
-import { FeatureIcon } from "./home-icons";
+import Link from "next/link";
 
 type HeroSectionProps = {
   copy: HomeContent;
@@ -8,108 +8,92 @@ type HeroSectionProps = {
 
 export default function HeroSection({ copy, language }: HeroSectionProps) {
   return (
-    <section className="hero page-width" id="top">
+    <section className="hero-section page-width" id="top">
       <div className="hero-copy">
-        <span className="eyebrow">
-          <span className="eyebrow-dot" />
+        <p className="ui-kicker hero-kicker">
+          <span aria-hidden="true" className="status-dot" />
           {copy.heroEyebrow}
-        </span>
-        <h1>
+        </p>
+        <h1 className="hero-title">
           {copy.heroTitle} <span>{copy.heroAccent}</span>
         </h1>
         <p className="hero-description">{copy.heroText}</p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#get-started">
+          <Link className="ui-button ui-button--primary" href="/register">
             {copy.primaryCta}
             <span aria-hidden="true">{language === "ar" ? "←" : "→"}</span>
-          </a>
-          <a className="button button-quiet" href="#how-it-works">
-            <span className="play-icon" aria-hidden="true">
-              ▶
-            </span>
+          </Link>
+          <a className="ui-button ui-button--secondary" href="#how-it-works">
             {copy.secondaryCta}
           </a>
         </div>
-        <div className="social-proof">
-          <div className="avatar-stack" aria-hidden="true">
-            <span>م</span>
-            <span>ت</span>
-            <span>ش</span>
-            <span>س</span>
-          </div>
+        <p className="hero-note">
+          <span className="font-data">NETWORK / 01</span>
           <span>{copy.socialProof}</span>
-        </div>
+        </p>
       </div>
 
-      <div
-        className="hero-art"
+      <section
+        aria-labelledby="network-panel-title"
+        className="network-panel ui-panel"
         id="how-it-works"
-        aria-label={copy.cardTitle}
       >
-        <div className="orbit orbit-one" />
-        <div className="orbit orbit-two" />
-        <div className="art-spark spark-one" aria-hidden="true">
-          ✦
-        </div>
-        <div className="art-spark spark-two" aria-hidden="true">
-          ✳
-        </div>
-        <div className="delivery-card">
-          <div className="delivery-card-head">
-            <div>
-              <span className="card-kicker">{copy.cardTitle}</span>
-              <strong>{copy.cardNumber}</strong>
-            </div>
-            <span className="card-menu" aria-hidden="true">
-              •••
-            </span>
+        <header className="network-panel-header">
+          <div>
+            <p className="ui-kicker">
+              <span className="font-data">SUPPLYFLOW / ROUTE</span>
+            </p>
+            <h2 id="network-panel-title">{copy.cardTitle}</h2>
           </div>
-          <div className="route-map">
-            <div className="route-line" />
-            <span className="route-pin pin-start">
-              <span />
+          <span className="network-index font-data">01—04</span>
+        </header>
+
+        <div className="network-journey">
+          <div className="network-role">
+            <span className="network-role-marker" aria-hidden="true">
+              01
             </span>
-            <span className="route-pin pin-end">
-              <span />
-            </span>
-            <div className="route-label label-start">{copy.roles[0]}</div>
-            <div className="route-label label-end">{copy.roles[3]}</div>
-            <div className="route-van" aria-hidden="true">
-              <FeatureIcon name="truck" />
-            </div>
+            <span>{copy.roles[0]}</span>
           </div>
-          <div className="delivery-status">
-            <div className="status-icon" aria-hidden="true">
+          <span className="network-connector" aria-hidden="true" />
+          <div className="network-role">
+            <span className="network-role-marker" aria-hidden="true">
+              02
+            </span>
+            <span>{copy.roles[1]}</span>
+          </div>
+          <span className="network-connector" aria-hidden="true" />
+          <div className="network-role">
+            <span className="network-role-marker" aria-hidden="true">
+              03
+            </span>
+            <span>{copy.roles[2]}</span>
+          </div>
+          <span className="network-connector" aria-hidden="true" />
+          <div className="network-role">
+            <span className="network-role-marker network-role-marker--accent" aria-hidden="true">
+              04
+            </span>
+            <span>{copy.roles[3]}</span>
+          </div>
+        </div>
+
+        <div className="network-order">
+          <div className="network-order-heading">
+            <span className="ui-kicker">{copy.cardStatus}</span>
+            <span className="network-order-id font-data">{copy.cardNumber}</span>
+          </div>
+          <div className="network-order-status">
+            <span className="network-status-indicator" aria-hidden="true">
               ✓
-            </div>
-            <div className="status-copy">
-              <strong>{copy.cardStatus}</strong>
-              <span>{copy.cardArrival}</span>
-            </div>
-            <strong className="arrival-time">{copy.cardDate}</strong>
+            </span>
+            <span>{copy.cardArrival}</span>
+            <time className="font-data">{copy.cardDate}</time>
           </div>
         </div>
-        <div className="floating-note note-top">
-          <span className="note-icon supplier-icon" aria-hidden="true">
-            ↗
-          </span>
-          <span>
-            <strong>{copy.roles[1]}</strong>
-            <small>Connected</small>
-          </span>
-          <span className="online-dot" />
-        </div>
-        <div className="floating-note note-bottom">
-          <span className="note-icon shopper-icon" aria-hidden="true">
-            ✳
-          </span>
-          <span>
-            <strong>{copy.roles[2]}</strong>
-            <small>On schedule</small>
-          </span>
-          <span className="online-dot" />
-        </div>
-      </div>
+        <span className="network-cross network-cross--top" aria-hidden="true" />
+        <span className="network-cross network-cross--bottom" aria-hidden="true" />
+      </section>
     </section>
   );
 }

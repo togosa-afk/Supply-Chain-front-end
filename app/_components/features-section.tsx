@@ -1,34 +1,32 @@
-import type { CSSProperties } from "react";
 import type { HomeContent } from "./home-content";
 import { FeatureIcon } from "./home-icons";
 
 export default function FeaturesSection({ copy }: { copy: HomeContent }) {
   return (
     <section className="features-section page-width" id="features">
-      <div className="section-heading">
-        <span className="section-eyebrow">{copy.sectionEyebrow}</span>
+      <header className="section-heading">
+        <p className="ui-kicker">
+          <span className="font-data">ROLES / 04</span>
+          <span aria-hidden="true" className="section-rule" />
+          {copy.sectionEyebrow}
+        </p>
         <h2>{copy.sectionTitle}</h2>
-        <p>{copy.sectionText}</p>
-      </div>
+        <p className="section-description">{copy.sectionText}</p>
+      </header>
 
-      <div className="feature-grid">
-        {copy.features.map((feature, index) => (
-          <article
-            className="feature-card"
-            key={feature.number}
-            style={{ "--card-index": index } as CSSProperties}
-          >
-            <div className="feature-card-top">
-              <span className="feature-icon">
+      <div className="feature-grid" role="list">
+        {copy.features.map((feature) => (
+          <article className="feature-card ui-panel" key={feature.number} role="listitem">
+            <div className="feature-card-meta">
+              <span className="feature-icon" aria-hidden="true">
                 <FeatureIcon name={feature.icon} />
               </span>
-              <span className="feature-number">{feature.number}</span>
+              <span className="feature-number font-data">
+                / {feature.number}
+              </span>
             </div>
             <h3>{feature.title}</h3>
             <p>{feature.text}</p>
-            <span className="feature-arrow" aria-hidden="true">
-              ↗
-            </span>
           </article>
         ))}
       </div>

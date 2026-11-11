@@ -1,5 +1,6 @@
 import type {
   ButtonHTMLAttributes,
+  ComponentPropsWithoutRef,
   InputHTMLAttributes,
   ReactNode,
   SelectHTMLAttributes,
@@ -180,11 +181,13 @@ export function Badge({
 export function Panel({
   children,
   className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return <section className={`ui-panel ${className}`.trim()}>{children}</section>;
+  ...props
+}: ComponentPropsWithoutRef<"section">) {
+  return (
+    <section {...props} className={`ui-panel ${className}`.trim()}>
+      {children}
+    </section>
+  );
 }
 
 export function StatusMessage({
@@ -196,7 +199,7 @@ export function StatusMessage({
 }) {
   return (
     <p
-      aria-live="polite"
+      aria-live={type === "error" ? "assertive" : "polite"}
       className={`ui-status ui-status--${type}`}
       role={type === "error" ? "alert" : "status"}
     >

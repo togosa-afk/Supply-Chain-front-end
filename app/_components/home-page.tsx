@@ -17,20 +17,23 @@ export default function HomePage() {
   }
 
   return (
-    <main className="landing" lang={language} dir={copy.direction}>
+    <div className="site-shell" lang={language} dir={copy.direction}>
+      <a className="skip-link" href="#main-content">
+        {language === "ar" ? "تجاوز إلى المحتوى" : "Skip to content"}
+      </a>
       <div className="hero-shell">
         <HomeHeader
           language={language}
           copy={copy}
           onLanguageChange={toggleLanguage}
         />
-        <HeroSection copy={copy} language={language} />
-        <div className="hero-bottom-glow" />
       </div>
-
-      <FeaturesSection copy={copy} />
-      <ClosingSection copy={copy} language={language} />
+      <main className="landing" id="main-content">
+        <HeroSection copy={copy} language={language} />
+        <FeaturesSection copy={copy} />
+        <ClosingSection copy={copy} language={language} />
+      </main>
       <SiteFooter copy={copy} language={language} />
-    </main>
+    </div>
   );
 }

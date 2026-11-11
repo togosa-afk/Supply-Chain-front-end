@@ -7,18 +7,26 @@ export default function AuthShell({
   eyebrow,
   title,
   description,
+  formEyebrow,
+  formTitle,
   children,
   alternate,
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  formEyebrow: string;
+  formTitle: string;
   children: ReactNode;
   alternate: ReactNode;
 }) {
   return (
-    <main className="auth-page" id="main-content" lang="en" dir="ltr">
-      <div className="auth-frame">
+    <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <main className="auth-page" id="main-content" lang="en" dir="ltr">
+        <div className="auth-frame">
         <header className="auth-header">
           <Brand />
           <div className="auth-header-actions">
@@ -56,8 +64,8 @@ export default function AuthShell({
 
           <section aria-labelledby="auth-form-title" className="auth-card">
             <div className="auth-card-heading">
-              <span className="ui-kicker">ACCOUNT ACCESS</span>
-              <h2 id="auth-form-title">{eyebrow}</h2>
+              <span className="ui-kicker">{formEyebrow}</span>
+              <h2 id="auth-form-title">{formTitle}</h2>
             </div>
             {children}
             <div className="auth-alternate">{alternate}</div>
@@ -68,7 +76,8 @@ export default function AuthShell({
           <span>SUPPLYFLOW / CONNECTED COMMERCE</span>
           <span>© 2026 SupplyFlow</span>
         </footer>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }
