@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Brand from "@/app/_components/brand";
+import {clearAuthSession} from "@/app/lib/auth";
 
-export default function SideBar({ onLogout }: { onLogout: () => void }) {
+export default function SideBar({ onLogout = () => clearAuthSession() }) {
   return (
     <aside className="profile-sidebar">
       <Brand />
