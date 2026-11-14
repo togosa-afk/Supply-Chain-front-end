@@ -1457,6 +1457,7 @@
     .profile-role-form {
       grid-template-columns: minmax(0, 1fr);
     }
+
   }
 
   @media (max-width: 480px) {

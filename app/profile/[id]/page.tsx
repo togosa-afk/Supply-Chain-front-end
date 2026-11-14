@@ -51,7 +51,9 @@ export default function ProfilePage() {
     getAuthStorageSnapshot,
     () => null,
   );
-  const [updatedSession, setUpdatedSession] = useState<AuthSession | null>(null);
+  const [updatedSession, setUpdatedSession] = useState<AuthSession | null>(
+    null,
+  );
   const [isEditingRole, setIsEditingRole] = useState(false);
   const [selectedRole, setSelectedRole] = useState<RegistrationRole | "">("");
   const [isUpdatingRole, setIsUpdatingRole] = useState(false);
@@ -149,7 +151,7 @@ export default function ProfilePage() {
         تجاوز إلى المحتوى
       </a>
       <div className="profile-layout" id="main-content" lang="ar" dir="rtl">
-        <SideBar onLogout={handleLogout} />
+        <SideBar onLogout={handleLogout} role={role} userId={userId} />
         <main className="profile-content">
           <header className="profile-page-header">
             <div>
