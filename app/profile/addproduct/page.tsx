@@ -10,7 +10,10 @@ import {
   clearAuthSession,
   getStoredAuthSession,
 } from "@/app/lib/auth";
-import { addNewProduct, type Product } from "@/app/services/addNewProduct/addNewProduct";
+import {
+  addNewProduct,
+  type Product,
+} from "@/app/services/addNewProduct/addNewProduct";
 import SideBar from "../components/sidebar";
 
 type ProductForm = {
@@ -75,9 +78,7 @@ export default function AddProductPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (
-      Number(form.min_avalabil_qaun) > Number(form.max_avalabil_qaun)
-    ) {
+    if (Number(form.min_avalabil_qaun) > Number(form.max_avalabil_qaun)) {
       setSubmissionMessage({
         type: "error",
         text: "يجب أن يكون الحد الأدنى أقل من الحد الأعلى أو مساويًا له.",
@@ -138,7 +139,9 @@ export default function AddProductPage() {
           <p className="ui-kicker">
             <span className="font-data">PRODUCTS / ACCESS</span>
           </p>
-          <h1>{isSignedIn ? "هذه الصفحة للمُصنّعين فقط" : "سجّل الدخول أولاً"}</h1>
+          <h1>
+            {isSignedIn ? "هذه الصفحة للمُصنّعين فقط" : "سجّل الدخول أولاً"}
+          </h1>
           <p>
             {isSignedIn
               ? "لا يمكن إضافة المنتجات إلا من حساب مُصنّع."
@@ -212,7 +215,9 @@ export default function AddProductPage() {
                 label="الكمية المتاحة"
                 min="0"
                 name="quantity"
-                onChange={(event) => handleChange("quantity", event.target.value)}
+                onChange={(event) =>
+                  handleChange("quantity", event.target.value)
+                }
                 required
                 step="1"
                 type="number"
