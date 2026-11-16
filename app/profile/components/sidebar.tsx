@@ -1,7 +1,20 @@
 import Link from "next/link";
 import Brand from "@/app/_components/brand";
+import { clearAuthSession } from "@/app/lib/auth";
 
-export default function SideBar({ onLogout }: { onLogout: () => void }) {
+type SideBarProps = {
+  activePage?: "profile" | "addproduct";
+  onLogout?: () => void;
+  role?: string;
+  userId?: string | number;
+};
+
+export default function SideBar({
+  activePage = "profile",
+  onLogout = () => clearAuthSession(),
+  role,
+  userId,
+}: SideBarProps) {
   return (
     <aside className="profile-sidebar">
       <Brand />
@@ -13,14 +26,23 @@ export default function SideBar({ onLogout }: { onLogout: () => void }) {
           <span aria-hidden="true">⌂</span>
           الرئيسية
         </Link>
-        <a
-          aria-current="page"
-          className="profile-nav-link profile-nav-link--current"
-          href="#account-details"
+        <Link
+          aria-current={activePage === "profile" ? "page" : undefined}
+          className={`profile-nav-link${activePage === "profile" ? " profile-nav-link--current" : ""}`}
+          href={`/profile/${userId ?? ""}`}
         >
           <span aria-hidden="true">◉</span>
           الملف الشخصي
-        </a>
+        </Link>
+        {role === "MANUFACTURER" && (
+          <Link
+            aria-current={activePage === "addproduct" ? "page" : undefined}
+            className={`profile-nav-link${activePage === "addproduct" ? " profile-nav-link--current" : ""}`}
+            href="/profile/addproduct"
+          >
+            أضف منتج جديد
+          </Link>
+        )}
       </nav>
       <div className="profile-sidebar-footer">
         <button className="profile-logout" onClick={onLogout} type="button">
