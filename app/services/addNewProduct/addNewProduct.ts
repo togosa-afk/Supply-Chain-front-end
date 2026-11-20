@@ -7,6 +7,7 @@ export type Product = {
   quantity: number;
   min_avalabil_qaun: number;
   max_avalabil_qaun: number;
+  img_url: string;
 };
 
 type AddProductRequestError = {

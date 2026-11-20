@@ -50,7 +50,14 @@ dashboards are not implemented.
 
    ```env
    NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
    ```
+
+   Create an **unsigned upload preset** in Cloudinary, configure allowed image
+   formats and upload limits, and use its name above.
+   The browser uploads images directly to Cloudinary; never expose your API
+   secret in a `NEXT_PUBLIC_` variable.
 
    The frontend appends these paths to the base URL:
 
