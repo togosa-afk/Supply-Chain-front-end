@@ -14,6 +14,7 @@ import {
   addNewProduct,
   type Product,
 } from "@/app/services/addNewProduct/addNewProduct";
+import ImageUploder from "@/app/common_components/img_uploder";
 import SideBar from "../components/sidebar";
 
 type ProductForm = {
@@ -21,6 +22,7 @@ type ProductForm = {
   quantity: string;
   min_avalabil_qaun: string;
   max_avalabil_qaun: string;
+  img_url: string;
 };
 
 const initialForm: ProductForm = {
@@ -28,6 +30,7 @@ const initialForm: ProductForm = {
   quantity: "",
   min_avalabil_qaun: "",
   max_avalabil_qaun: "",
+  img_url: "",
 };
 
 function subscribeToAuthStorage(onChange: () => void) {
@@ -54,6 +57,7 @@ export default function AddProductPage() {
   );
   const [form, setForm] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isImageUploading, setIsImageUploading] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState<{
     type: "error" | "success";
     text: string;
@@ -78,6 +82,22 @@ export default function AddProductPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (isImageUploading) {
+      setSubmissionMessage({
+        type: "error",
+        text: "انتظر حتى يكتمل رفع الصورة.",
+      });
+      return;
+    }
+
+    if (!form.img_url) {
+      setSubmissionMessage({
+        type: "error",
+        text: "ارفع صورة المنتج قبل إضافته.",
+      });
+      return;
+    }
+
     if (Number(form.min_avalabil_qaun) > Number(form.max_avalabil_qaun)) {
       setSubmissionMessage({
         type: "error",
@@ -91,6 +111,7 @@ export default function AddProductPage() {
       quantity: Number(form.quantity),
       min_avalabil_qaun: Number(form.min_avalabil_qaun),
       max_avalabil_qaun: Number(form.max_avalabil_qaun),
+      img_url: form.img_url,
     };
 
     setIsSubmitting(true);
@@ -196,7 +217,7 @@ export default function AddProductPage() {
             </header>
 
             <form
-              aria-busy={isSubmitting}
+              aria-busy={isSubmitting || isImageUploading}
               className="auth-form"
               onSubmit={handleSubmit}
             >
@@ -249,9 +270,23 @@ export default function AddProductPage() {
                 type="number"
                 value={form.max_avalabil_qaun}
               />
+              <ImageUploder
+                onUpload={(uploadedImage) =>
+                  handleChange("img_url", uploadedImage.secure_url)
+                }
+                onUploadingChange={setIsImageUploading}
+                value={form.img_url ?? ""}
+              />
               <div className="product-form-actions">
-                <Button loading={isSubmitting} type="submit">
-                  {isSubmitting ? "جارٍ إضافة المنتج…" : "إضافة المنتج"}
+                <Button
+                  loading={isSubmitting || isImageUploading}
+                  type="submit"
+                >
+                  {isSubmitting
+                    ? "جارٍ إضافة المنتج…"
+                    : isImageUploading
+                      ? "جارٍ رفع الصورة…"
+                      : "إضافة المنتج"}
                 </Button>
               </div>
               {submissionMessage && (
